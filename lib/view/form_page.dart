@@ -2,13 +2,14 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 // form for edit and add fighter info (if data passed show edit else show add )
-class MyCustomForm extends StatefulWidget {
+class AddAndUpdateForm extends StatefulWidget {
   final String? fullName;
   final String? country;
   final String? id;
@@ -17,7 +18,7 @@ class MyCustomForm extends StatefulWidget {
   final String? record;
   final String? age;
 
-  MyCustomForm(
+  AddAndUpdateForm(
       {this.fullName,
       this.country,
       this.id,
@@ -27,32 +28,33 @@ class MyCustomForm extends StatefulWidget {
       this.age});
 
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  AddAndUpdateFormState createState() {
+    return AddAndUpdateFormState();
   }
+
+  static GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 }
 
-class MyCustomFormState extends State<MyCustomForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _fullName = TextEditingController();
-  final _country = TextEditingController();
-  // final _weightclass = TextEditingController();
-  final _record = TextEditingController();
-  final _age = TextEditingController();
-  final _imageUrl = TextEditingController();
+class AddAndUpdateFormState extends State<AddAndUpdateForm> {
+  TextEditingController _fullName = TextEditingController();
+  TextEditingController _country = TextEditingController();
+  TextEditingController _weightclass = TextEditingController();
+  TextEditingController _record = TextEditingController();
+  TextEditingController _age = TextEditingController();
+  TextEditingController _imageUrl = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
+  initState() {
     _fullName.text = widget.fullName != null ? widget.fullName! : "";
     _country.text = widget.country != null ? widget.country! : "";
-    // _weightclass.text = widget.weightclass != null ? widget.weightclass! : "";
     _record.text = widget.record != null ? widget.record! : "";
     _age.text = widget.age != null ? widget.age! : "";
     _imageUrl.text = widget.imgUrl != null ? widget.imgUrl! : "";
+    _weightclass.text = widget.weightclass != null ? widget.weightclass! : "";
+    super.initState();
+  }
 
-    String _weightclass =
-        widget.weightclass != null ? widget.weightclass! : "Heavyweight";
-    //print(widget.imgUrl);
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.id != null ? "Update" : "Add"),
@@ -61,7 +63,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         padding: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: AddAndUpdateForm._formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,66 +73,76 @@ class MyCustomFormState extends State<MyCustomForm> {
                   style: TextStyle(color: Colors.black54),
                 ),
                 SizedBox(
-                  height: 30.0,
+                  height: 20.0,
                 ),
                 TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: _fullName,
                   decoration: const InputDecoration(
-                    icon: const Icon(Icons.person),
+                    border: OutlineInputBorder(),
+                    icon: const Icon(Icons.person_outlined),
                     labelText: 'Full Name',
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: _age,
                   decoration: const InputDecoration(
-                    icon: const Icon(Icons.date_range),
+                    border: OutlineInputBorder(),
+                    icon: const Icon(Icons.date_range_outlined),
                     labelText: 'Age',
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: _record,
                   decoration: const InputDecoration(
-                    icon: const Icon(Icons.sports_score),
-                    hintText: 'Wins-Losses-Draws (KOs)',
-                    labelText: 'Record',
+                    border: OutlineInputBorder(),
+                    icon: const Icon(Icons.sports_score_outlined),
+                    hintText: 'Ex: 143-4-2 (82)',
+                    labelText: 'Record: Wins-Losses-Draws (KOs)',
                   ),
                 ),
-
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    icon: const Icon(Icons.monitor_weight),
-                  ),
-                  elevation: 16,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _weightclass = newValue!;
-                    });
-                  },
-                  value: _weightclass,
-                  items: <String>[
-                    'Heavyweight',
-                    'Light Heavyweight',
-                    'Middleweight',
-                    'Welterweight',
-                    'Lightweight'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                SizedBox(
+                  height: 10,
                 ),
                 TextFormField(
+                  textInputAction: TextInputAction.next,
+                  controller: _weightclass,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    icon: const Icon(Icons.monitor_weight_outlined),
+                    hintText: 'Ex: Heavyweight, Middleweight, Lightweight...',
+                    labelText: 'Weightclass',
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: _country,
                   decoration: const InputDecoration(
-                    icon: const Icon(Icons.flag),
+                    border: OutlineInputBorder(),
+                    icon: const Icon(Icons.flag_outlined),
                     labelText: 'Country',
                   ),
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
+                  textInputAction: TextInputAction.go,
                   controller: _imageUrl,
                   decoration: const InputDecoration(
-                    icon: const Icon(Icons.image),
+                    border: OutlineInputBorder(),
+                    icon: const Icon(Icons.image_outlined),
                     labelText: 'Image Url',
                   ),
                 ),
@@ -138,8 +150,9 @@ class MyCustomFormState extends State<MyCustomForm> {
                 Container(
                   padding: const EdgeInsets.only(top: 40.0),
                   child: FlatButton(
-                    padding: EdgeInsets.only(top: 12, bottom: 12),
-                    color: Colors.deepOrange,
+                    minWidth: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(14),
+                    color: Colors.deepPurple,
                     child: Text(
                       widget.id != null ? "UPDATE" : "ADD",
                       style: TextStyle(
@@ -153,7 +166,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                         'age': _age.text,
                         'country': _country.text,
                         'record': _record.text,
-                        'weightclass': _weightclass.toString(),
+                        'weightclass': _weightclass.text,
                         'picture': _imageUrl.text,
                       };
                       if (widget.id != null) {
@@ -173,7 +186,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                             content: const Text('Added successfully.'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
-                      Navigator.pop(context);
+                      // Navigator.pop(context);
                     },
                   ),
                 ),

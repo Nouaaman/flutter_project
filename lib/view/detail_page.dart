@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/services.dart';
+import 'package:image_downloader/image_downloader.dart';
 
 class FighterDetails extends StatefulWidget {
   final String? fullName;
@@ -23,30 +25,81 @@ class FighterDetails extends StatefulWidget {
 }
 
 class _FighterDetailsState extends State<FighterDetails> {
+  int _progress = 0;
+  @override
+  void initState() {
+    super.initState();
+
+    ImageDownloader.callback(onProgressUpdate: (String? imageId, int progress) {
+      setState(() {
+        _progress = progress;
+      });
+    });
+  }
+
+  void _downloadImage() async {
+    final snackBar = SnackBar(content: const Text('Downloading...'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    await ImageDownloader.downloadImage(widget.imgUrl!.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: MediaQuery.of(context).size.height / 1.17,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.download_for_offline_rounded),
+                tooltip: 'Download Image',
+                color: Colors.deepPurple.shade50,
+                onPressed: () {
+                  _downloadImage();
+                },
+              ),
+            ],
+            expandedHeight: MediaQuery.of(context).size.height,
             floating: true,
             pinned: true,
             backgroundColor: Colors.black,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              titlePadding: EdgeInsets.all(50),
+              title: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.fullName!.toString(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 30,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 0,
+                          color: Colors.deepPurple,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_downward,
+                    color: Colors.deepPurple.shade100,
+                  )
+                ],
+              ),
+              titlePadding: EdgeInsets.all(40),
               background: CachedNetworkImage(
                   imageUrl: widget.imgUrl.toString(),
-                  fit: BoxFit.fitWidth,
-                  width: width / 0.5,
-                  height: 400.0,
+                  fit: BoxFit.fitHeight,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                   imageBuilder: (context, imageProvider) => Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: imageProvider,
-                            fit: BoxFit.fitWidth,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -60,43 +113,88 @@ class _FighterDetailsState extends State<FighterDetails> {
           SliverList(
               delegate: SliverChildListDelegate([
             Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                widget.fullName!.toString(),
-                style: TextStyle(fontSize: 35.0),
-              ),
-            ),
+                padding: const EdgeInsets.fromLTRB(0, 18, 0, 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Age',
+                      style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+                    ),
+                    SizedBox(
+                      width: 60,
+                      child: Icon(
+                        Icons.arrow_downward,
+                        size: 16,
+                        color: Colors.deepPurple.shade200,
+                      ),
+                    ),
+                    Text(
+                      widget.age!.toString(),
+                      style: TextStyle(fontSize: 26.0),
+                    ),
+                  ],
+                )),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Age: ' + widget.age!.toString(),
-                style: TextStyle(fontSize: 18.0),
-              ),
-            ),
+                padding: const EdgeInsets.fromLTRB(0, 18, 0, 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Record',
+                      style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+                    ),
+                    Icon(
+                      Icons.arrow_downward,
+                      size: 16,
+                      color: Colors.deepPurple.shade200,
+                    ),
+                    Text(
+                      widget.record!.toString(),
+                      style: TextStyle(fontSize: 26.0),
+                    ),
+                  ],
+                )),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Record: ' + widget.record!.toString(),
-                style: TextStyle(fontSize: 18.0),
-              ),
-            ),
+                padding: const EdgeInsets.fromLTRB(0, 18, 0, 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Weightclass',
+                      style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+                    ),
+                    Icon(
+                      Icons.arrow_downward,
+                      size: 16,
+                      color: Colors.deepPurple.shade200,
+                    ),
+                    Text(
+                      widget.weightclass!.toString(),
+                      style: TextStyle(fontSize: 26.0),
+                    ),
+                  ],
+                )),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Weightclass: ' + widget.weightclass!.toString(),
-                style: TextStyle(fontSize: 18.0),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Country: ' + widget.country!.toString(),
-                style: TextStyle(fontSize: 18.0),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            )
+                padding: const EdgeInsets.fromLTRB(0, 18, 0, 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Country',
+                      style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+                    ),
+                    Icon(
+                      Icons.arrow_downward,
+                      size: 16,
+                      color: Colors.deepPurple.shade200,
+                    ),
+                    Text(
+                      widget.country!.toString(),
+                      style: TextStyle(fontSize: 26.0),
+                    ),
+                  ],
+                )),
           ]))
         ],
       ),

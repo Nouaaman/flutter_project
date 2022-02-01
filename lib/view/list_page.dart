@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_project/view/about_page.dart';
 
 import 'detail_page.dart';
 import 'form_page.dart';
@@ -35,6 +36,10 @@ class _ListFightersState extends State<ListFighters> {
             tooltip: 'About Glory',
             onPressed: () {
               //open about page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutGlory()),
+              );
             },
           ),
         ],
@@ -43,7 +48,7 @@ class _ListFightersState extends State<ListFighters> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MyCustomForm()),
+            MaterialPageRoute(builder: (context) => AddAndUpdateForm()),
           );
         },
         child: Icon(Icons.add),
@@ -117,10 +122,10 @@ class _ListFightersState extends State<ListFighters> {
                             },
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                width: width - 92,
+                                padding: EdgeInsets.only(left: 22),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -135,7 +140,7 @@ class _ListFightersState extends State<ListFighters> {
                                 ),
                               ),
                               PopupMenuButton(
-                                  color: Colors.black,
+                                  color: Colors.deepPurple.shade50,
                                   itemBuilder: (BuildContext context) {
                                     return CardAction.choice
                                         .map((String choice) {
@@ -151,7 +156,7 @@ class _ListFightersState extends State<ListFighters> {
                                                   style: TextButton.styleFrom(
                                                     primary: Colors.white,
                                                     backgroundColor:
-                                                        Colors.deepOrange,
+                                                        Colors.deepPurple,
                                                     padding:
                                                         EdgeInsets.fromLTRB(
                                                             20, 9, 20, 9),
@@ -162,7 +167,7 @@ class _ListFightersState extends State<ListFighters> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              MyCustomForm(
+                                                              AddAndUpdateForm(
                                                                   fullName:
                                                                       fullName,
                                                                   country:
@@ -192,7 +197,7 @@ class _ListFightersState extends State<ListFighters> {
                                                   style: TextButton.styleFrom(
                                                     primary: Colors.white,
                                                     backgroundColor:
-                                                        Colors.deepOrange,
+                                                        Colors.deepPurple,
                                                     padding:
                                                         EdgeInsets.fromLTRB(
                                                             20, 9, 20, 9),
