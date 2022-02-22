@@ -52,8 +52,8 @@ class _AboutGloryState extends State<AboutGlory> {
               child: Text(
                 'ABOUT US',
                 style: TextStyle(
-                  // fontSize: 22.0,
-                  color: Colors.deepPurple,
+                  fontSize: 22.0,
+                  color: Colors.indigo,
                 ),
               ),
             ),

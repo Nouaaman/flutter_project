@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
       title: 'Glory Kickboxing',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        scaffoldBackgroundColor: Colors.deepPurple.shade50,
+        scaffoldBackgroundColor: Colors.white,
         cardColor: Colors.white,
       ),
       home: ListFighters(),

@@ -54,7 +54,6 @@ class _FighterDetailsState extends State<FighterDetails> {
               IconButton(
                 icon: const Icon(Icons.download_for_offline_rounded),
                 tooltip: 'Download Image',
-                color: Colors.deepPurple.shade50,
                 onPressed: () {
                   _downloadImage();
                 },
@@ -76,9 +75,9 @@ class _FighterDetailsState extends State<FighterDetails> {
                       fontSize: 30,
                       shadows: [
                         Shadow(
-                          blurRadius: 0,
-                          color: Colors.deepPurple,
-                          offset: Offset(2.0, 2.0),
+                          blurRadius: 1,
+                          color: Colors.indigo,
+                          offset: Offset(1.5, 1.5),
                         ),
                       ],
                     ),
@@ -119,14 +118,14 @@ class _FighterDetailsState extends State<FighterDetails> {
                   children: [
                     Text(
                       'Age',
-                      style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+                      style: TextStyle(fontSize: 14, color: Colors.indigo),
                     ),
                     SizedBox(
                       width: 60,
                       child: Icon(
                         Icons.arrow_downward,
                         size: 16,
-                        color: Colors.deepPurple.shade200,
+                        color: Colors.indigo.shade200,
                       ),
                     ),
                     Text(
@@ -142,12 +141,12 @@ class _FighterDetailsState extends State<FighterDetails> {
                   children: [
                     Text(
                       'Record',
-                      style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+                      style: TextStyle(fontSize: 14, color: Colors.indigo),
                     ),
                     Icon(
                       Icons.arrow_downward,
                       size: 16,
-                      color: Colors.deepPurple.shade200,
+                      color: Colors.indigo.shade200,
                     ),
                     Text(
                       widget.record!.toString(),
@@ -162,12 +161,12 @@ class _FighterDetailsState extends State<FighterDetails> {
                   children: [
                     Text(
                       'Weightclass',
-                      style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+                      style: TextStyle(fontSize: 14, color: Colors.indigo),
                     ),
                     Icon(
                       Icons.arrow_downward,
                       size: 16,
-                      color: Colors.deepPurple.shade200,
+                      color: Colors.indigo.shade200,
                     ),
                     Text(
                       widget.weightclass!.toString(),
@@ -182,12 +181,12 @@ class _FighterDetailsState extends State<FighterDetails> {
                   children: [
                     Text(
                       'Country',
-                      style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+                      style: TextStyle(fontSize: 14, color: Colors.indigo),
                     ),
                     Icon(
                       Icons.arrow_downward,
                       size: 16,
-                      color: Colors.deepPurple.shade200,
+                      color: Colors.indigo.shade200,
                     ),
                     Text(
                       widget.country!.toString(),

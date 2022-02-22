@@ -78,8 +78,14 @@ class _ListFightersState extends State<ListFighters> {
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
+
                   child: Card(
+                    elevation: 7,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     child: Container(
+
                       margin: EdgeInsets.all(10.0),
                       child: Column(
                         children: [
@@ -133,14 +139,19 @@ class _ListFightersState extends State<ListFighters> {
                                       fullName,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 20),
+                                          fontSize: 22,
+                                      ),
                                     ),
-                                    Text(country)
+                                    Text(country,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            )
+                                    )
                                   ],
                                 ),
                               ),
                               PopupMenuButton(
-                                  color: Colors.deepPurple.shade50,
+                                  color: Colors.black87,
                                   itemBuilder: (BuildContext context) {
                                     return CardAction.choice
                                         .map((String choice) {
@@ -156,7 +167,7 @@ class _ListFightersState extends State<ListFighters> {
                                                   style: TextButton.styleFrom(
                                                     primary: Colors.white,
                                                     backgroundColor:
-                                                        Colors.deepPurple,
+                                                        Colors.indigo,
                                                     padding:
                                                         EdgeInsets.fromLTRB(
                                                             20, 9, 20, 9),
@@ -197,7 +208,7 @@ class _ListFightersState extends State<ListFighters> {
                                                   style: TextButton.styleFrom(
                                                     primary: Colors.white,
                                                     backgroundColor:
-                                                        Colors.deepPurple,
+                                                        Colors.indigo,
                                                     padding:
                                                         EdgeInsets.fromLTRB(
                                                             20, 9, 20, 9),

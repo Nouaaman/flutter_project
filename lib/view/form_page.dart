@@ -152,7 +152,7 @@ class AddAndUpdateFormState extends State<AddAndUpdateForm> {
                   child: FlatButton(
                     minWidth: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(14),
-                    color: Colors.deepPurple,
+                    color: Colors.indigo,
                     child: Text(
                       widget.id != null ? "UPDATE" : "ADD",
                       style: TextStyle(
@@ -197,35 +197,4 @@ class AddAndUpdateFormState extends State<AddAndUpdateForm> {
       ),
     );
   }
-
-  // uploadImage() async {
-  //   final _storage = FirebaseStorage.instance;
-  //   final _picker = ImagePicker();
-  //   PickedFile? image;
-  //   //Check Permissions
-  //   await Permission.photos.request();
-
-  //   var permissionStatus = await Permission.photos.status;
-
-  //   if (permissionStatus.isGranted) {
-  //     //Select Image
-  //     image = await _picker.getImage(source: ImageSource.gallery);
-  //     setState(() {
-  //       image != null ? imageLoding = true : imageLoding = false;
-  //     });
-  //     var file = File(image!.path);
-  //     //Upload to Firebase
-  //     var imagename = Random().nextInt(10000).toString();
-  //     var snapshot =
-  //         await _storage.ref().child('folderName/$imagename').putFile(file);
-  //     var downloadUrl = await snapshot.ref.getDownloadURL();
-  //     //print(downloadUrl);
-  //     setState(() {
-  //       widget.imgUrl = downloadUrl;
-  //       imageLoding = false;
-  //     });
-  //   } else {
-  //     print('Grant Permissions and try again');
-  //   }
-  // }
 }
