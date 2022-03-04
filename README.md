@@ -1,3 +1,3 @@
 # school flutter project 
-#CRUD Android app
+CRUD Android app using flutter.
 
